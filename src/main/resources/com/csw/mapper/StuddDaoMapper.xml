@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csw.dao.StuddDao">
+    <resultMap type="Studd" id="xx">
+        <id column="tid" property="id"/>
+        <association property="user" javaType="User">
+            <id column="uid" property="id"/>
+            <result column="uname" property="name"/>
+            <result column="upassword" property="password"/>
+        </association>
+        <association property="caipu" javaType="Caipu">
+            <id column="pid" property="id"/>
+            <result column="pname" property="name"/>
+            <result column="pcover" property="cover"/>
+            <result column="pgongyi" property="gongyi"/>
+            <result column="pjianjie" property="jianjie"/>
+            <result column="pcount" property="count"/>
+        </association>
+    </resultMap>
+    <select id="queryAll" resultMap="xx">
+ select t.id as tid,
+    u.id as uid,u.name as uname,u.password as upassword,
+    p.id as pid,p.name as pname,p.cover as pcover,p.gongyi as pgongyi,
+p.jianjie as pjianjie,p.count as pcount
+    from studd t,user u,caipu p where u.id=t.uid and p.id=t.pid
+</select>
+    <insert id="add">
+    insert into studd values(#{s.id},#{s.uid},#{s.pid})
+</insert>
+
+</mapper>
